@@ -46,12 +46,6 @@ that it's using this module.
 https://aws.amazon.com/blogs/containers/amazon-ebs-csi-driver-is-now-generally-available-in-amazon-eks-add-ons/
 */
 
-resource "aws_eks_addon" "csi_driver" {
-  cluster_name             = module.eks.cluster_id
-  addon_name               = "aws-ebs-csi-driver"
-  addon_version            = "v1.11.4-eksbuild.1"
-  service_account_role_arn = aws_iam_role.eks_ebs_csi_driver.arn
-}
 
 data "aws_iam_policy_document" "csi" {
   statement {
@@ -107,6 +101,13 @@ module "eks" {
     provider_key_arn = aws_kms_key.eks.arn
     resources        = ["secrets"]
   }]
+  
+  cluster_addons = { 
+    aws-ebs-csi-driver = {
+      service_account_role_arn = aws_iam_role.eks_ebs_csi_driver.arn
+      most_recent = true 
+    }
+  }
 
   cloudwatch_log_group_kms_key_id = module.kms_cloudwatch_log_group.kms_arn
   cloudwatch_log_group_retention_in_days = var.cloudwatch_log_group_retention_in_days
