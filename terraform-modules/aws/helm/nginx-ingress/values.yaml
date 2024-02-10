@@ -12,6 +12,7 @@ controller:
     annotations:
       # https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
       service.beta.kubernetes.io/aws-load-balancer-internal: "false"
+      service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: ${lbtags}
   # nodeSelector:
   #   app-type: my-node
   # tolerations:
