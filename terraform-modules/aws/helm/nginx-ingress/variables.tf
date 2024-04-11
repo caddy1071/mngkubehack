@@ -22,6 +22,13 @@ variable chart_name {
   description = "Name to set the helm deployment to"
 }
 
+variable user_chart_name {
+  type        = string
+  default     = "nginx-ingress-user"
+  description = "Name to set the helm deployment to"
+}
+
+
 variable helm_values {
   type        = string
   default     = ""
